@@ -11,6 +11,7 @@ operating system from MIT, running on an emulated RISC-V computer.
 | Lab | Topic |
 |-----|-------|
 | [Lab 1](lab-1/README.md) | Your Linux workbench: terminal, shell, editor, compiler, first boot of xv6 |
+| [Lab 2](lab-2/README.md) | Processes: your own repository, fork/exec/wait on Linux, pipes in xv6 |
 
 **Start with [Lab 1](lab-1/README.md).** It explains how to get a Linux
 terminal on Windows, macOS, or a Chromebook, or in your browser with GitHub
