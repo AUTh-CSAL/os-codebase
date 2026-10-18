@@ -151,6 +151,7 @@ UPROGS=\
 	$U/_forphan\
 	$U/_dorphan\
 	$U/_sync\
+	$U/_proof\
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)
@@ -203,3 +204,8 @@ check-qemu-version:
 .PHONY: fmt
 fmt:
 	clang-format -i $(wildcard kernel/*.[ch] user/*.[ch] mkfs/*.c)
+
+# Course addition: fingerprint of this installation, compiled into user/proof.
+# Hash of the Linux machine id and host name (only the hash is used).
+MACHINE_FP := $(shell { cat /etc/machine-id 2>/dev/null; hostname; } | sha256sum | cut -c1-8)
+$U/proof.o: CFLAGS += -DMACHINE_FP=0x$(MACHINE_FP)

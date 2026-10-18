@@ -110,3 +110,13 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// return the current time in seconds since 1970-01-01 UTC.
+uint64
+sys_time(void)
+{
+  // Reading TIME_LOW latches TIME_HIGH, so read low first.
+  uint64 lo = *(volatile uint32 *)(RTC0 + 0x00);
+  uint64 hi = *(volatile uint32 *)(RTC0 + 0x04);
+  return ((hi << 32) | lo) / 1000000000ULL;
+}

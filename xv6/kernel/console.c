@@ -148,6 +148,21 @@ consoleintr(int c)
 {
   acquire(&cons.lock);
 
+  // Discard terminal escape sequences: arrow keys, and the invisible markers
+  // many terminals put around pasted text (ESC [ 200 ~ ... ESC [ 201 ~),
+  // which would otherwise become part of the command line.
+  static int esc; // 0: normal, 1: after ESC, 2: in ESC [ ..., 3: after ESC O
+  if (c == '\x1b' || esc) {
+    if (c == '\x1b')
+      esc = 1;
+    else if (esc == 1)
+      esc = (c == '[') ? 2 : (c == 'O') ? 3 : 0;
+    else if (esc == 3 || (c >= 0x40 && c <= 0x7e))
+      esc = 0;
+    release(&cons.lock);
+    return;
+  }
+
   switch (c) {
   case C('P'): // Print process list.
     procdump();
