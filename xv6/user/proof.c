@@ -188,6 +188,59 @@ lab2(const char *nonce, uint64 *e)
   return 0;
 }
 
+// Lab 3: count processes with your getprocs() before and after forking k
+// children (k from the code), and after they are gone. Counting
+// differences makes the check independent of other running processes.
+static int
+lab3(const char *nonce, uint64 *e)
+{
+  int k = hexval(nonce) % 8 + 2; // 2 .. 9
+  int fds[2], before, during, after;
+  char c;
+
+  before = getprocs();
+  if (before < 0)
+    return fail("getprocs() returned -1: the kernel does not know this "
+                "system call yet (check syscall.c)");
+  if (before < 3) {
+    fprintf(2, "proof: getprocs() says %d processes exist, but at least 3 "
+               "do: init, sh, and proof\n", before);
+    return -1;
+  }
+  if (pipe(fds) < 0)
+    return fail("pipe failed");
+  for (int i = 0; i < k; i++) {
+    int pid = fork();
+    if (pid < 0)
+      return fail("fork failed");
+    if (pid == 0) {
+      // Child: sleep in read() until the parent closes the pipe.
+      close(fds[1]);
+      read(fds[0], &c, 1);
+      exit(0);
+    }
+  }
+  during = getprocs();
+  close(fds[1]); // wake the children: read() returns 0
+  close(fds[0]);
+  for (int i = 0; i < k; i++)
+    wait(0);
+  after = getprocs();
+
+  printf("getprocs(): %d before, %d with %d more children, %d after\n",
+         before, during, k, after);
+  if (during - before != k) {
+    fprintf(2, "proof: with %d more processes, getprocs() should have grown "
+               "by %d, not by %d (check nproc() in proc.c)\n", k, k, during - before);
+    return -1;
+  }
+  if (after != before)
+    return fail("after the children exited, getprocs() should be back to "
+                "where it started (count every state except UNUSED)");
+  *e = k;
+  return 0;
+}
+
 // Lab-specific evidence: something only a working xv6 for that lab produces.
 static int
 evidence(int lab, const char *nonce, uint64 *e)
@@ -197,6 +250,8 @@ evidence(int lab, const char *nonce, uint64 *e)
     return lab1(e);
   case 2:
     return lab2(nonce, e);
+  case 3:
+    return lab3(nonce, e);
   default:
     return fail("this xv6 has no proof for that lab yet: "
                 "get course updates with git pull upstream main");

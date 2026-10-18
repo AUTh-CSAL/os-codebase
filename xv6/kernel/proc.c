@@ -701,3 +701,18 @@ procdump(void)
     printk("\n");
   }
 }
+
+// Lab 3: return the number of processes that exist, that is, the
+// entries of the process table whose state is not UNUSED.
+int
+nproc(void)
+{
+  int n = 0;
+
+  // TODO: loop over the process table, as procdump() above does, and
+  // count the processes whose state is not UNUSED. Hold p->lock while
+  // you look at p->state: acquire(&p->lock) before, release(&p->lock)
+  // after.
+
+  return n;
+}

@@ -44,3 +44,4 @@ entry("pause");
 entry("uptime");
 entry("sync");
 entry("time");
+entry("getprocs"); # Lab 3
