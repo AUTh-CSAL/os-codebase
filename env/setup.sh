@@ -91,10 +91,15 @@ step "Installing course tools (a few hundred MB; may take several minutes)"
 sudo -E apt-get install -y -q --no-install-recommends "${PKGS[@]}" \
   || die "Package installation failed."
 
-if [ "$RESTORE_MAN" = yes ]; then
+# Also when an earlier run lifted the exclusion but the pages are still
+# missing, so that running the script again always repairs them.
+if [ "$RESTORE_MAN" = yes ] || ! man -w 2 fork >/dev/null 2>&1; then
   step "Restoring manual pages of basic commands"
+  # Packages that were already installed when man pages were still excluded
+  # (container images ship some of these) have lost their pages: reinstall.
   sudo -E apt-get install -y -q --reinstall \
     coreutils findutils grep sed tar gzip diffutils less procps bash util-linux \
+    man-db manpages manpages-dev git make \
     >/dev/null || die "Could not reinstall basic packages."
   sudo mandb -q
 fi
