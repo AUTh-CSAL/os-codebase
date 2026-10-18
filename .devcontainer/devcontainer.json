@@ -1,0 +1,13 @@
+{
+  // GitHub Codespaces for the OS labs: Ubuntu 24.04, like the other paths,
+  // with the same tools installed by the same script.
+  "name": "OS labs (xv6 on RISC-V)",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "postCreateCommand": "bash env/setup.sh",
+  "hostRequirements": { "cpus": 2 },
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-vscode.cpptools"]
+    }
+  }
+}

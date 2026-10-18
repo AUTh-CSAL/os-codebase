@@ -1,0 +1,28 @@
+# Lima VM for the OS labs (macOS, path B).
+#   limactl start --name=os --tty=false <URL or path of this file>
+#
+# Kept small on purpose: Ubuntu 24.04 *minimal* cloud image (~215 MB on
+# Apple Silicon, ~250 MB on Intel, vs ~590 MB for the regular image) and no
+# containerd (Lima would otherwise download another ~250 MB).
+minimumLimaVersion: 2.0.0
+
+images:
+- location: "https://cloud-images.ubuntu.com/minimal/releases/noble/release/ubuntu-24.04-minimal-cloudimg-arm64.img"
+  arch: "aarch64"
+- location: "https://cloud-images.ubuntu.com/minimal/releases/noble/release/ubuntu-24.04-minimal-cloudimg-amd64.img"
+  arch: "x86_64"
+
+containerd:
+  system: false
+  user: false
+
+cpus: 2
+memory: "2GiB"
+# Upper limit only; the disk file grows as it is used.
+disk: "20GiB"
+
+# Mac home folder visible inside Linux, read-only: nothing done in the VM
+# can modify Mac files.
+mounts:
+- location: "~"
+  writable: false
