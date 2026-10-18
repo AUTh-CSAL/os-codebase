@@ -291,9 +291,9 @@ your web browser. Nothing is installed on your machine, so this path works
 anywhere, including the **Vergina** lab PCs. The course codespace comes with
 every tool already installed.
 
-**D1.** Use **Chrome, Edge, or Firefox**. (Codespaces runs a full editor in
-the browser, and in Safari pasting into its terminal can crash the page.)
-Sign in at <https://github.com>.
+**D1.** Sign in at <https://github.com>. Any up-to-date browser works; if
+the page misbehaves (for example, it goes blank when you paste), reopen
+your codespace in Chrome, Edge, or Firefox.
 
 **D2.** Open the course repository:
 <https://github.com/AUTh-CSAL/os-codebase>
@@ -1237,8 +1237,9 @@ inside xv6.
 
 ## Getting help
 
-Use the course Zulip, stream **`[TODO instructor: stream name, e.g. #lab-help]`**
-at **`[TODO instructor: Zulip URL]`**.
+Join the course Zulip at <https://auth-os.zulipchat.com/join/xttzhr6exabpzkplk7mctezo/>
+and ask in the channel
+[**#OS-Labs-2026**](https://auth-os.zulipchat.com/#narrow/channel/646188-OS-Labs-2026).
 
 - **Ask in the public stream, not by private message.** Your classmates
   probably have the same problem, and the answer helps everyone.
