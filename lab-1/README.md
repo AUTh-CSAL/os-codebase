@@ -1109,7 +1109,9 @@ make qemu
 ```
 
 The first time, make compiles the kernel and all the programs (a few
-seconds to a minute), builds a disk image with them, and starts QEMU. The
+seconds to a minute), builds a disk image with them, and starts QEMU.
+Among the build messages, one says `warning: kernel/kernel has a LOAD
+segment with RWX permissions`: it is expected, and you can ignore it. The
 last lines are xv6's own boot messages:
 
 ```text
