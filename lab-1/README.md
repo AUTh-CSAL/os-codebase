@@ -45,7 +45,7 @@ before typing**:
 | Layer | The prompt looks like | How to get in | How to get out |
 |---|---|---|---|
 | 1. Laptop | `PS C:\Users\maria>` (Windows)<br>`maria@MacBook ~ %` (Mac) | — | — |
-| 2. Linux | `maria@laptop:~$`<br>(the part before `:` varies: `lima-os`, `penguin`, …) | Section 1 shows how, for your path | `exit` |
+| 2. Linux | `maria@laptop:~$`<br>(the part before `:` varies: `lima-os`, `penguin`, …)<br>Codespaces: `@maria ➜ /workspaces/os-codebase (main) $` | Section 1 shows how, for your path | `exit` |
 | 3. xv6 | just `$`, nothing before it | `make qemu` (Section 5) | **Ctrl + A**, then **X** |
 
 Almost all your work happens in layer 2. Layer 3 is the operating system you
@@ -291,7 +291,9 @@ your web browser. Nothing is installed on your machine, so this path works
 anywhere, including the **Vergina** lab PCs. The course codespace comes with
 every tool already installed.
 
-**D1.** Sign in at <https://github.com>.
+**D1.** Use **Chrome, Edge, or Firefox**. (Codespaces runs a full editor in
+the browser, and in Safari pasting into its terminal can crash the page.)
+Sign in at <https://github.com>.
 
 **D2.** Open the course repository:
 <https://github.com/AUTh-CSAL/os-codebase>
@@ -346,7 +348,7 @@ x86_64
 PRETTY_NAME="Ubuntu 24.04.1 LTS"
 ```
 
-- `whoami` prints your Linux username (in Codespaces it is `codespace`).
+- `whoami` prints your Linux username (in Codespaces it is `vscode`).
 - `uname -m` prints your processor type: `x86_64` (Intel/AMD) or `aarch64`
   (ARM: Apple M-series, Snapdragon, many Chromebooks). Either is fine; see
   the note in 1.1.
@@ -371,8 +373,9 @@ bash setup.sh
 > [!TIP]
 > **Copy and paste in the terminal:** In WSL and ChromeOS, paste with
 > **right-click** or **Ctrl + Shift + V**. On a Mac, use **⌘ V**. In
-> Codespaces, use **Ctrl + V**. Plain **Ctrl + V** does *not* paste in most
-> Linux terminals.
+> Codespaces, use **Ctrl + V** (**⌘ V** on a Mac); if the browser asks for
+> permission to paste, allow it. Plain **Ctrl + V** does *not* paste in
+> most Linux terminals.
 
 The script asks for your Linux password once (on ChromeOS and Codespaces it
 does not ask). It then downloads about 200 MB, which takes 2–10 minutes
@@ -485,7 +488,7 @@ holds for file names: `Notes.txt` and `notes.txt` are two different files.
 Linux keeps files in **directories** (what Windows and macOS call
 *folders*), organized as a tree that starts at the **root directory**,
 written `/`. Every user has a **home directory** for their own files. Yours
-is `/home/` followed by your username (in Codespaces: `/home/codespace`).
+is `/home/` followed by your username (in Codespaces: `/home/vscode`).
 
 ```text
 /                     the root of the whole tree

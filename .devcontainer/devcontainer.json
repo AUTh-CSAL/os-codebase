@@ -4,6 +4,10 @@
   "name": "OS labs (xv6 on RISC-V)",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
   "postCreateCommand": "bash env/setup.sh",
+  // SSH server, so that `gh codespace ssh` works from a local terminal.
+  "features": {
+    "ghcr.io/devcontainers/features/sshd:1": { "version": "latest" }
+  },
   "hostRequirements": { "cpus": 2 },
   "customizations": {
     "vscode": {
