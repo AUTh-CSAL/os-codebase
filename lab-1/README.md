@@ -7,6 +7,15 @@
 > Sections 2–5 take about 30, 10, 10, and 10 minutes.
 > **Help:** ask on the class Zulip (see [Getting help](#getting-help)), not by private message.
 
+> [!NOTE]
+> **Lecture connection (lectures 01–02).** The three layers in Section 1 are
+> lecture 02's picture of an operating system: a layer between the hardware
+> and your programs, which here you can run inside another one. QEMU, which
+> imitates a RISC-V processor, carries out lecture 01's **instruction cycle**
+> (fetch an instruction, execute it, check for interrupts) in software. And
+> `file` in Section 4 shows that a program is machine code for one particular
+> kind of processor.
+
 ---
 
 ## 1. Get a Linux terminal
