@@ -161,7 +161,9 @@ restart) a window titled *Ubuntu* opens and asks for:
 > `sudo`. It does not have to match your Windows password.
 
 If the *Ubuntu* window did not open by itself, open the **Start** menu, type
-`Ubuntu`, and open **Ubuntu 24.04 LTS**.
+`Ubuntu`, and open **Ubuntu 24.04 LTS**. (On recent Windows, the username
+question may instead appear in the same administrator window. Then, when you
+see the Linux prompt, type `exit` to get back to PowerShell for A4.)
 
 **A4. Check that you are on WSL 2.** In the administrator terminal from A1
 (not in Ubuntu), type:
@@ -207,7 +209,8 @@ a Mac with a single command.
 Enter.
 
 **B2. Install Homebrew** (a package manager for macOS), unless you already
-have it. Typing `brew --version` tells you: if it prints a version number,
+have it. On a Mac that has never had developer tools, this step alone can take
+15–30 minutes, so start it first and read on while it runs. Typing `brew --version` tells you: if it prints a version number,
 skip to B3. Otherwise paste this line and press Enter:
 
 ```bash
@@ -297,8 +300,8 @@ launcher: **Terminal → penguin**.
 
 A *codespace* is a Linux computer in GitHub's cloud that you use through
 your web browser. Nothing is installed on your machine, so this path works
-anywhere, including the **Vergina** lab PCs. The course codespace comes with
-every tool already installed.
+anywhere, including the **Vergina** lab PCs. When the codespace is created, it
+installs every course tool by itself, so path D skips step 1.5.
 
 **D1.** Sign in at <https://github.com>. Any up-to-date browser works; if
 the page misbehaves (for example, it goes blank when you paste), reopen
@@ -308,8 +311,8 @@ your codespace in Chrome, Edge, or Firefox.
 <https://github.com/AUTh-CSAL/os-codebase>
 
 **D3.** Click the green **Code** button → **Codespaces** tab → **Create
-codespace on main**. The first start takes 2–5 minutes; later starts take
-seconds.
+codespace on main**. The first start takes about 5–10 minutes, because it
+installs the course tools; later starts take seconds.
 
 **D4.** An editor (Visual Studio Code) opens in your browser. The
 **terminal** is the panel at the bottom. If you do not see it, press
@@ -354,7 +357,7 @@ You should see something like:
 ```text
 maria
 x86_64
-PRETTY_NAME="Ubuntu 24.04.1 LTS"
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
 ```
 
 - `whoami` prints your Linux username (in Codespaces it is `vscode`).
@@ -370,13 +373,17 @@ If all three commands printed something similar, your terminal works.
 
 ### 1.5 Install the course tools
 
+> [!NOTE]
+> **Path D (Codespaces): skip this step.** Your codespace ran the script when
+> it was created. Check that it finished: `tail ~/os-setup.log` should end with
+> `ALL CHECKS PASSED`. If it does not exist yet, wait a minute and try again.
+
 One script installs everything the labs need: the C compiler, Git, a
 text editor, the manual pages, and the RISC-V compiler and emulator for xv6.
-Copy these two lines into your Linux terminal and press Enter:
+Copy this line into your Linux terminal and press Enter:
 
 ```bash
-cd ~ && curl -fsSLO https://raw.githubusercontent.com/AUTh-CSAL/os-codebase/main/env/setup.sh
-bash setup.sh
+cd ~ && curl -fsSLO https://raw.githubusercontent.com/AUTh-CSAL/os-codebase/main/env/setup.sh && bash setup.sh
 ```
 
 > [!TIP]
@@ -386,8 +393,8 @@ bash setup.sh
 > permission to paste, allow it. Plain **Ctrl + V** does *not* paste in
 > most Linux terminals.
 
-The script asks for your Linux password once (on ChromeOS and Codespaces it
-does not ask). It then downloads about 200 MB, which takes 2–10 minutes
+On WSL, the script asks for your Linux password once (Lima and ChromeOS do
+not ask, although the script says it needs one). It then downloads about 200 MB, which takes 2–10 minutes
 depending on your connection. It prints a lot of text; you can ignore it until
 the end, which should look like this:
 
@@ -421,7 +428,7 @@ When the course is over (or if you want to start again from scratch):
 |--------------|-----------------------------------------------------------------------------|
 | A: WSL       | In PowerShell: `wsl --unregister Ubuntu-24.04` (deletes the Linux system and all files in it) |
 | B: Lima      | In Mac Terminal: `limactl delete -f os` and `limactl prune` (frees the download cache), then optionally `brew uninstall lima` |
-| C: ChromeOS  | Settings → Developers → Linux development environment → **Remove**          |
+| C: ChromeOS  | Settings → About ChromeOS → Developers → Linux development environment → **Remove** |
 | D: Codespaces| <https://github.com/codespaces> → **⋯** → **Delete**                        |
 
 ---
@@ -497,7 +504,8 @@ holds for file names: `Notes.txt` and `notes.txt` are two different files.
 Linux keeps files in **directories** (what Windows and macOS call
 *folders*), organized as a tree that starts at the **root directory**,
 written `/`. Every user has a **home directory** for their own files. Yours
-is `/home/` followed by your username (in Codespaces: `/home/vscode`).
+is `/home/` followed by your username (in Codespaces: `/home/vscode`; with
+Lima on a Mac: `/home/maria.guest`).
 
 ```text
 /                     the root of the whole tree
@@ -630,7 +638,6 @@ Operating Systems lab notes
 
 ```bash
 cp notes/todo.txt notes/todo-backup.txt
-ls notes
 mv notes/todo-backup.txt code/
 ls -R
 ```
@@ -675,7 +682,7 @@ notes
 one screen at a time:
 
 ```bash
-less /etc/services
+less /usr/share/common-licenses/GPL-3
 ```
 
 Inside `less`:
@@ -874,6 +881,11 @@ not ⌘.
 | **Ctrl + K** / **Ctrl + U** | cut the current line / paste it back      |
 | **Ctrl + W**          | search ("**w**here is")                          |
 | **Ctrl + G**          | help                                             |
+
+> [!WARNING]
+> **Codespaces in a browser:** the browser keeps some Ctrl keys for itself:
+> **Ctrl + W closes the browser tab!** Use nano's function keys instead:
+> **F3** to save, **F6** to search, **F2** to exit.
 
 Save with **Ctrl + O** and Enter, then exit with **Ctrl + X**. Back at the
 prompt, check that the file is there:
@@ -1156,7 +1168,9 @@ $ wc README
 48 336 2441 README
 ```
 
-Now press **Ctrl + P**. The kernel prints its list of processes:
+Now press **Ctrl + P**. The kernel prints its list of processes (in Codespaces,
+if a search box opens at the top instead, press Esc, click into the terminal,
+and try again):
 
 ```text
 1 sleep  init
@@ -1199,11 +1213,19 @@ shows you a command made for you and for that quiz attempt, such as
 proof 1 maria 4f1c92
 ```
 
-1. Boot xv6 (`make qemu` in the `xv6` directory).
+1. Boot xv6: `cd ~/os-codebase/xv6` (Codespaces:
+   `cd /workspaces/os-codebase/xv6`), then `make qemu`.
 2. **Copy** the command from Moodle and **paste** it at the xv6 `$` prompt.
-3. xv6 prints a line such as
-   `L1-1792336609-09E36ECE-C75A-8B81-201A-2`. Copy the **whole** line,
-   paste it into the Moodle answer box, and press **Check**.
+3. xv6 prints:
+
+   ```text
+   Copy this whole line into the Moodle answer box:
+
+   L1-1792336609-09E36ECE-C75A-8B81-201A-2
+   ```
+
+   Copy the line that starts with `L1-`, all of it, paste it into the Moodle
+   answer box, and press **Check**.
 
 > [!WARNING]
 > **Each token is unique to you, to your quiz attempt, and to your
@@ -1227,7 +1249,8 @@ proof 1 maria 4f1c92
   shown in the attempt you are answering.
 - **Moodle says "outside the period this lab is open".** Your computer's
   clock is wrong. Fix the date and time in your laptop's settings, then
-  restart xv6.
+  restart xv6. On WSL the Linux clock can fall behind after the laptop sleeps:
+  run `wsl --shutdown` in PowerShell, then open Ubuntu again.
 
 </details>
 

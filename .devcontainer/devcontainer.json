@@ -11,7 +11,13 @@
   "hostRequirements": { "cpus": 2 },
   "customizations": {
     "vscode": {
-      "extensions": ["ms-vscode.cpptools"]
+      "extensions": ["ms-vscode.cpptools"],
+      // Let Ctrl+P (xv6's process list) and Ctrl+K (nano's cut) reach the
+      // terminal instead of VS Code.
+      "settings": {
+        "terminal.integrated.allowChords": false,
+        "terminal.integrated.commandsToSkipShell": ["-workbench.action.quickOpen"]
+      }
     }
   }
 }
