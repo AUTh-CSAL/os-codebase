@@ -255,8 +255,8 @@ number, its **process ID** (**pid**).
 
 ### 2.1 The processes you already have
 
-Your shell is a process too. `$$` is its pid, and `ps` lists the
-processes running in your terminal:
+Your shell is a process too. The first command below prints its pid,
+and `ps` lists the processes running in your terminal:
 
 ```bash
 echo $$
